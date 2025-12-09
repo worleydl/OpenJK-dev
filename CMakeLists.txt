@@ -138,7 +138,7 @@ if(WIN32)
 
 		FetchContent_Declare(UwpDep
 			GIT_REPOSITORY https://github.com/worleydl/uwp-dep.git
-			GIT_TAG 7b90b8dc72aa6c1e2abb8ecddacd510e92c09c78 # zandronum branch
+			GIT_TAG 3b1994129a0242987812e62629bb4f7dd7a919bf # jk branch
 		)
 		FetchContent_MakeAvailable(UwpDep)
 	endif()

@@ -22,6 +22,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #ifdef _UWP
 // Export sdlmain for external launch via minimal wrapper
 #define SDLMAIN_DECLSPEC __declspec(dllexport)
+#include <Windows.h>
+#include <string>
+extern "C" __declspec(dllimport) HMODULE uwp_LoadLibrary(LPCWSTR path);
 #endif
 
 #include <csignal>
@@ -564,6 +567,11 @@ void *Sys_LoadSPGameDll( const char *name, GetGameAPIProc **GetGameAPI )
     //First, look for the old-style mac .bundle that's inside a pk3
     //It's actually zipped, and the zipfile has the same name as 'name'
     libHandle = Sys_LoadMachOBundle( filename );
+#elif _UWP
+	int len = MultiByteToWideChar(CP_UTF8, 0, filename, -1, nullptr, 0);
+	std::wstring wstr(len, 0);
+	MultiByteToWideChar(CP_UTF8, 0, filename, -1, &wstr[0], len);
+	libHandle = static_cast<void*>(uwp_LoadLibrary(wstr.c_str()));
 #endif
 
 	if (!libHandle) {
