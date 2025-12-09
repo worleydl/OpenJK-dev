@@ -393,7 +393,11 @@ if(BuildSPEngine OR BuildJK2SPEngine)
 		endif(MakeApplicationBundles)
 
 		if(WIN32)
-			add_executable(${ProjectName} WIN32 ${SPEngineFiles})
+			if(NOT BuildUWP)
+				add_executable(${ProjectName} WIN32 ${SPEngineFiles})
+			else(NOT BuildUWP)
+				add_library(${ProjectName} WIN32 ${SPEngineFiles})
+			endif()
 			if(UseInternalSDL2)
 				if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 					set(SPEngineExtraInstallFiles

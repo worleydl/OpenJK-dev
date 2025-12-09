@@ -381,6 +381,11 @@ set_property(TARGET ${SPGame} APPEND PROPERTY COMPILE_OPTIONS ${OPENJK_VISIBILIT
 if(NOT MSVC)
 	# remove "lib" prefix for .so/.dylib files
 	set_target_properties(${SPGame} PROPERTIES PREFIX "")
+elseif(BuildUWP)
+	# use a /MT dll for simplicity
+	set_property(TARGET ${SPGame}
+		PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+	)
 endif()
 
 if(WIN32)
