@@ -21,6 +21,8 @@
 cmake_minimum_required(VERSION 3.1...3.31)
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
 
+include(FetchContent)
+
 set(InOpenJK ON)
 
 set(ProjectName "OpenJK" CACHE STRING "Project Name")
@@ -133,6 +135,12 @@ if(WIN32)
 
 		# stick to /MT for everything and use packaged DLL approach
 		set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
+		FetchContent_Declare(UwpDep
+			GIT_REPOSITORY https://github.com/worleydl/uwp-dep.git
+			GIT_TAG 7b90b8dc72aa6c1e2abb8ecddacd510e92c09c78 # zandronum branch
+		)
+		FetchContent_MakeAvailable(UwpDep)
 	endif()
 else()
 	set(X86 OFF)

@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
 
-include(FetchContent)
-
 # Setup UWP platform
 set(CMAKE_SYSTEM_NAME WindowsStore)
 set(CMAKE_SYSTEM_VERSION 10.0.19041.0)
@@ -22,12 +20,6 @@ if(NOT OPENJK_DIR)
 	message(FATAL_ERROR "OPENJK_DIR must be set to a valid path pointing to the openjk cmake build dir")
 endif()
 
-FetchContent_Declare(UwpDep
-	GIT_REPOSITORY https://github.com/worleydl/uwp-dep.git
-	GIT_TAG da75dd2240b6eca7848aebc2f72433bce1a15e3b
-)
-FetchContent_MakeAvailable(UwpDep)
-
 add_executable(${PROJECT_NAME} WIN32
 	src/main.cpp
 )
@@ -40,12 +32,12 @@ set(BinDeps
 	${OPENJK_DIR}/${CMAKE_BUILD_TYPE}/rdsp-vanilla_x86_64.dll
 
 	# Dependency DLL's
-	${CMAKE_BINARY_DIR}/_deps/uwpdep-src/x64/bin/dxil.dll
-	${CMAKE_BINARY_DIR}/_deps/uwpdep-src/x64/bin/libuwp.dll
-	${CMAKE_BINARY_DIR}/_deps/uwpdep-src/x64/bin/libgallium_wgl.dll
-	${CMAKE_BINARY_DIR}/_deps/uwpdep-src/x64/bin/opengl32.dll
-	${CMAKE_BINARY_DIR}/_deps/uwpdep-src/x64/bin/SDL2.dll
-	${CMAKE_BINARY_DIR}/_deps/uwpdep-src/x64/bin/z-1.dll
+	${OPENJK_DIR}/_deps/uwpdep-src/x64/bin/dxil.dll
+	${OPENJK_DIR}/_deps/uwpdep-src/x64/bin/libuwp.dll
+	${OPENJK_DIR}/_deps/uwpdep-src/x64/bin/libgallium_wgl.dll
+	${OPENJK_DIR}/_deps/uwpdep-src/x64/bin/opengl32.dll
+	${OPENJK_DIR}/_deps/uwpdep-src/x64/bin/SDL2.dll
+	${OPENJK_DIR}/_deps/uwpdep-src/x64/bin/z-1.dll
 
 	Package.appxmanifest
 )
@@ -76,7 +68,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-	${CMAKE_BINARY_DIR}/_deps/uwpdep-src/x64/include
+	${OPENJK_DIR}/_deps/uwpdep-src/x64/include
 )
 
 set(BinLibs
@@ -84,8 +76,8 @@ set(BinLibs
 	${OPENJK_DIR}/code/${CMAKE_BUILD_TYPE}/openjk_sp.x86_64.lib
 
 	# Other dep libs
-	${CMAKE_BINARY_DIR}/_deps/uwpdep-src/x64/lib/libuwp.lib
-	${CMAKE_BINARY_DIR}/_deps/uwpdep-src/x64/lib/SDL2.lib
+	${OPENJK_DIR}/_deps/uwpdep-src/x64/lib/libuwp.lib
+	${OPENJK_DIR}/_deps/uwpdep-src/x64/lib/SDL2.lib
 
 	# System libs
 	OpenGL32

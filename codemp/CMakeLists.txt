@@ -190,6 +190,10 @@ if(BuildMPEngine OR BuildMPDed)
 	list(APPEND MPEngineAndDedIncludeDirectories ${ZLIB_INCLUDE_DIR})
 	list(APPEND MPEngineAndDedLibraries          ${ZLIB_LIBRARIES})
 
+	if (BuildUWP)
+		list(APPEND MPEngineAndDedLibraries LIBUWP)
+	endif()
+
 	set(MPEngineAndDedCgameFiles
 		"${MPDir}/cgame/cg_public.h"
 		)

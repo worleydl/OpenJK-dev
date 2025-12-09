@@ -383,6 +383,10 @@ if(BuildSPEngine OR BuildJK2SPEngine)
     list(APPEND SPEngineIncludeDirectories ${ZLIB_INCLUDE_DIR})
     list(APPEND SPEngineLibraries          ${ZLIB_LIBRARIES})
 
+    if (BuildUWP)
+        list(APPEND SPEngineLibraries LIBUWP)
+    endif()
+
 	# project macro so we can invoke it twice: for jk2 and for ja
 	function(add_sp_project ProjectName Label SPDirName InstallDir Component)
 		if(MakeApplicationBundles)

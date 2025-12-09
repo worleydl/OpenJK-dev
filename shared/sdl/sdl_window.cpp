@@ -26,6 +26,10 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include "sys/sys_local.h"
 #include "sdl_icon.h"
 
+#ifdef _UWP
+extern "C" __declspec(dllimport) void uwp_SetScreenSize(int, int);
+#endif
+
 enum rserr_t
 {
 	RSERR_OK,
@@ -403,6 +407,11 @@ static rserr_t GLimp_SetMode(glconfig_t *glConfig, const windowDesc_t *windowDes
 		x = ( desktopMode.w / 2 ) - ( glConfig->vidWidth / 2 );
 		y = ( desktopMode.h / 2 ) - ( glConfig->vidHeight / 2 );
 	}
+
+	// Send size hint to UWP GL
+#ifdef _UWP
+	uwp_SetScreenSize(glConfig->vidWidth, glConfig->vidHeight);
+#endif
 
 	// Destroy existing state if it exists
 	if( opengl_context != NULL )
