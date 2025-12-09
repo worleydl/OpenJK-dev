@@ -127,6 +127,13 @@ if(WIN32)
 		set(Architecture "x86")
 		set(WIN64 FALSE)
 	endif()
+
+	if(BuildUWP)
+		add_compile_definitions(_UWP)
+
+		# stick to /MT for everything and use packaged DLL approach
+		set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+	endif()
 else()
 	set(X86 OFF)
 	if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm64|aarch64)$")

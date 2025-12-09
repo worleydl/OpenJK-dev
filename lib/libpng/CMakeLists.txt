@@ -54,12 +54,6 @@ add_library(bundled_libpng STATIC include/png.h
                                   pngwtran.c
                                   pngwutil.c)
 
-if (BuildUWP)
-	set_property(TARGET bundled_libpng
-		PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
-	)
-endif()
-
 # Let consumers get at our bundled library in the standard CMake way.  These
 # variables are not set in the cache, but instead shadow the variables in the
 # cache.  (These are the same variables exported by the standard CMake FindPNG

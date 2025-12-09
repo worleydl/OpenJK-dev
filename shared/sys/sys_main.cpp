@@ -19,6 +19,11 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 ===========================================================================
 */
 
+#ifdef _UWP
+// Export sdlmain for external launch via minimal wrapper
+#define SDLMAIN_DECLSPEC __declspec(dllexport)
+#endif
+
 #include <csignal>
 #include <cstdlib>
 #include <cstdarg>

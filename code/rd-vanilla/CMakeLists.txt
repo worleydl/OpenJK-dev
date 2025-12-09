@@ -160,11 +160,6 @@ if(BuildSPRdVanilla OR BuildJK2SPRdVanilla)
 		if(NOT MSVC)
 			# remove "lib" prefix for .so/.dylib files
 			set_target_properties(${ProjectName} PROPERTIES PREFIX "")
-		elseif(BuildUWP)
-			# use a /MT dll for simplicity
-			set_property(TARGET ${ProjectName}
-				PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
-			)
 		endif()
 
 		if(WIN32)
