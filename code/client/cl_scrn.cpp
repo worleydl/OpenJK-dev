@@ -471,6 +471,10 @@ void SCR_DrawScreenField( stereoFrame_t stereoFrame ) {
 	}
 }
 
+#ifdef _UWP
+void _UI_MouseEvent( int dx, int dy );
+#endif
+
 /*
 ==================
 SCR_UpdateScreen
@@ -498,6 +502,13 @@ void SCR_UpdateScreen( void ) {
 	// that case.
 	if ( cls.uiStarted )
 	{
+#ifdef _UWP
+		// push virtual mouse events
+		if (cls.vm_dx != 0 || cls.vm_dy != 0) {
+			_UI_MouseEvent(cls.vm_dx, cls.vm_dy);
+		}
+#endif
+
 		// if running in stereo, we need to draw the frame twice
 		if ( cls.glconfig.stereoEnabled ) {
 			SCR_DrawScreenField( STEREO_LEFT );

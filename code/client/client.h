@@ -213,6 +213,8 @@ typedef struct {
 	qhandle_t	cursorShader;
 	int			cursorX;
 	int			cursorY;
+	int			vm_dx;
+	int			vm_dy;
 
 	// Engine menu
 	int			menuFont;

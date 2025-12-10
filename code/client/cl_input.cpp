@@ -467,6 +467,34 @@ void CL_MouseEvent( int dx, int dy, int time ) {
 
 /*
 =================
+CL_VirtualMouseEvent
+
+Maintains state tracking for virtual mouse but doesn't actually call events.
+
+If user holds stick to one side the events will stop flowing so we move mouse
+in cl_main based off the vm_dx/vm_dy state
+=================
+*/
+#define VIRTUAL_MOUSE_MAX_SPEED 18
+#define VIRTUAL_MOUSE_MIN_SPEED 2
+void CL_VirtualMouseEvent( int axis, int delta, int time)
+{
+	if ( Key_GetCatcher( ) & KEYCATCH_UI ) {
+		float speed = ( abs(delta) / 32767.0 ) * VIRTUAL_MOUSE_MAX_SPEED;
+		speed = Q_max(VIRTUAL_MOUSE_MIN_SPEED, speed);
+
+		if ( axis == 0 ) {
+			cls.vm_dx = delta == 0 ? 0 : delta > 0 ? speed : -speed;
+		} else if ( axis == 1 ) {
+			cls.vm_dy = delta == 0 ? 0 : delta > 0 ?  speed : -speed;
+		}
+	} else {
+		cls.vm_dx = cls.vm_dy = 0;
+	}
+}
+
+/*
+=================
 CL_JoystickEvent
 
 Joystick values stay set until changed

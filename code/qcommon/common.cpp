@@ -904,6 +904,9 @@ int Com_EventLoop( void ) {
 		case SE_MOUSE:
 			CL_MouseEvent( ev.evValue, ev.evValue2, ev.evTime );
 			break;
+		case SE_VIRTUAL_MOUSE:
+			CL_VirtualMouseEvent(ev.evValue, ev.evValue2, ev.evTime);
+			break;
 		case SE_JOYSTICK_AXIS:
 			CL_JoystickEvent( ev.evValue, ev.evValue2, ev.evTime );
 			break;

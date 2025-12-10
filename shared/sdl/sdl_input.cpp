@@ -884,6 +884,11 @@ static void IN_GamepadMove( void )
 				Sys_QueEvent(0, SE_KEY, negKey, qtrue, 0, NULL);
 
 			stick_state.oldaaxes[i] = axis;
+
+			// Forward off virtual mouse events for left stick
+			if (i == 0 || i == 1) {
+				Sys_QueEvent(0, SE_VIRTUAL_MOUSE, i, axis, 0, NULL);
+			}
 		}
 	}
 
@@ -1288,6 +1293,11 @@ static void IN_ProcessEvents( void )
 	{
 		switch( e.type )
 		{
+			case SDL_CONTROLLERDEVICEADDED:
+			case SDL_CONTROLLERDEVICEREMOVED:
+				IN_InitJoystick();
+				break;
+
 			case SDL_KEYDOWN:
 				key = IN_TranslateSDLToJKKey( &e.key.keysym, qtrue );
 				if ( key != A_NULL )
