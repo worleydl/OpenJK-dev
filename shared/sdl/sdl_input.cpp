@@ -620,12 +620,7 @@ static void IN_InitJoystick( void )
 	if( in_joystickNo->integer < 0 || in_joystickNo->integer >= total )
 		Cvar_Set( "in_joystickNo", "0" );
 
-#ifndef _UWP
 	in_joystickUseAnalog = Cvar_Get( "in_joystickUseAnalog", "0", CVAR_ARCHIVE_ND );
-#else
-	in_joystickUseAnalog = Cvar_Get( "in_joystickUseAnalog", "1", CVAR_ARCHIVE_ND );
-#endif
-
 	in_joystickThreshold = Cvar_Get( "joy_threshold", "0.15", CVAR_ARCHIVE_ND );
 
 	j_pitch =        Cvar_Get( "j_pitch",        "0.022", CVAR_ARCHIVE_ND );
